@@ -1,7 +1,7 @@
 {
   "name": "@vuex-orm/plugin-search",
   "description": "Fuzzy search plugin for vuex-orm",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "dependencies": {
     "fuse.js": "^3.2.0"
   },
@@ -17,7 +17,7 @@
   },
   "main": "dist/index.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/vuex-orm/plugin-search.git"
+    "type": "git",
+    "url": "https://github.com/vuex-orm/plugin-search.git"
   }
 }
