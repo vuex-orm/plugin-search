@@ -77,7 +77,7 @@ see: [Fuse.js](http://fusejs.io/) for demo
 | matchAllTokens | When true, the result set will only include records that match all tokens. Will only work if **tokenize** is also true. **Note**: It is better to use multiple **.search()** query chains if you have multiple terms that need to match. | false |
 | verbose | Will print to the console. Useful for debugging. | false |
 
-#### Option Use Examples
+## Option Use Examples
 
 **During Plugin Install**
 
