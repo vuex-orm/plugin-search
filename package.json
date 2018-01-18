@@ -5,10 +5,19 @@
   "dependencies": {
     "fuse.js": "^3.2.0"
   },
-  "devDependencies": {
-    "vue-build": "^2.3.0",
-    "vuex": "^3.0.1",
-    "vuex-orm": "^0.15.0"
+  "scripts": {
+    "dev": "vue-build dev",
+    "build": "vue-build prod"
   },
-  "main": "dist/index.js"
+  "peerDependencies": {
+    "vuex-orm": "^0.15.x"
+  },
+  "devDependencies": {
+    "vue-build": "^2.3.0"
+  },
+  "main": "dist/index.js",
+  "repository": {
+    "type" : "git",
+    "url" : "https://github.com/vuex-orm/plugin-search.git"
+  }
 }
