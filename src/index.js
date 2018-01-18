@@ -2,14 +2,15 @@ import Fuse from 'fuse.js'
 
 export const defaultOptions = {
   searchPrimaryKey: false,
-  tokenize: true,
+  tokenize: false,
   shouldSort: false,
-  threshold: 0.6,
+  threshold: 0.3,
   location: 0,
   distance: 100,
   maxPatternLength: 32,
   minMatchCharLength: 1,
   verbose: false,
+  debug: false,
   keys: []
 }
 
@@ -46,6 +47,11 @@ const plugin = {
         }
       }
       options.keys = searchKeys
+      if (options.debug) {
+        console.log('---- SEARCH OPTIONS ----')
+        console.log(options)
+        console.log('------------------------')
+      }
       const records = this.query.records
       const fuse = new Fuse(records, options)
       try {

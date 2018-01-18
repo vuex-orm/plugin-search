@@ -65,7 +65,7 @@ see: [Fuse.js](http://fusejs.io/) for demo
 | searchPrimaryKey | Also search the primary key | false |
 | location | Approximately where in the text is the pattern expected to be found | 0 |
 | distance | Determines how close the match must be to the fuzzy location | 100 |
-| threshold | **0.0** requires a perfect match, and a threshold of **1.0** would match anything | 0.6 |
+| threshold | **0.0** requires a perfect match, and a threshold of **1.0** would match anything | 0.3 |
 | maxPatternLength | Machine word size | 32 |
 | caseSensitive | Indicates whether comparisons should be case sensitive | false |
 | tokenSeparator | Regex used to separate words when searching. Only applicable when **tokenize** is **true** | / +/g |
@@ -73,7 +73,7 @@ see: [Fuse.js](http://fusejs.io/) for demo
 | minMatchCharLength | Minimum number of characters that must be matched before a result is considered a match | 1 |
 | keys | An array of fields (columns) to be included in the search | Model.$fields() |
 | shouldSort | Whether to sort the result list, by score | false |
-| tokenize | When true, the search algorithm will search individual words **and** the full string, computing the final score as a function of both. **Note**: that when _tokenize_ is _true_, the **threshold**, **distance**, and **location** are inconsequential for individual tokens | true |
+| tokenize | When true, the search algorithm will search individual words **and** the full string, computing the final score as a function of both. **Note**: that when _tokenize_ is _true_, the **threshold**, **distance**, and **location** are inconsequential for individual tokens | false |
 | matchAllTokens | When true, the result set will only include records that match all tokens. Will only work if **tokenize** is also true. **Note**: It is better to use multiple **.search()** query chains if you have multiple terms that need to match. | false |
 | verbose | Will print to the console. Useful for debugging. | false |
 
