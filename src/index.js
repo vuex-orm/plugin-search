@@ -21,7 +21,6 @@ const plugin = {
     const installOptions = {...defaultOptions, ...pluginOptions}
 
     components.Repo.prototype.search = function (term, singleOptions = {}) {
-      let options = {...installOptions, singleOptions}
       const fields = this.entity.fields()
 
       // -- default search keys are all model fields
@@ -37,6 +36,9 @@ const plugin = {
         searchKeys = singleOptions.keys
       }
       const primaryKey = this.entity.primaryKey
+
+      let options = {...installOptions, ...singleOptions}
+
       if (!options.searchPrimaryKey) {
         let pkIndex = searchKeys.indexOf(primaryKey)
         if (pkIndex !== -1) {
