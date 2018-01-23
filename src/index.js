@@ -22,6 +22,9 @@ const plugin = {
     const installOptions = {...defaultOptions, ...pluginOptions}
 
     components.Repo.prototype.search = function (term, singleOptions = {}) {
+      if (term === undefined || term === '' || (Array.isArray(term) && !term.length) || term === null) {
+        return this
+      }
       const fields = this.entity.fields()
 
       // -- default search keys are all model fields
@@ -52,15 +55,25 @@ const plugin = {
         console.log(options)
         console.log('------------------------')
       }
-      const records = this.query.records
-      const fuse = new Fuse(records, options)
-      try {
-        this.query.records = fuse.search(term)
-      } catch (e) {
-        if (options.verbose) {
-          console.log('error in search query, ignoring chain...', e)
-        }
+      // -- perform search
+      let terms = []
+      if (Array.isArray(term) && term.length) {
+        terms = term.slice(0)
+      } else {
+        terms.push(term)
       }
+      terms.forEach((t) => {
+        const records = this.query.records
+        const fuse = new Fuse(records, options)
+        try {
+          this.query.records = fuse.search(t)
+        } catch (e) {
+          if (options.verbose) {
+            console.log('error in search query, ignoring chain...', e)
+          }
+        }
+      })
+      // -- return instance for chaining
       return this
     }
   }

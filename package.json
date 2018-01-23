@@ -1,16 +1,19 @@
 {
   "name": "@vuex-orm/plugin-search",
   "description": "Fuzzy search plugin for vuex-orm",
-  "version": "0.1.6",
-  "dependencies": {
-    "fuse.js": "^3.2.0"
-  },
+  "version": "0.1.7",
+  "author": "Conan Crawford <cj@cjcrawford.com>",
+  "license": "MIT",
   "scripts": {
     "dev": "vue-build dev",
     "build": "vue-build prod"
   },
+  "dependencies": {
+    "@vuex-orm/core": "^0.16.1",
+    "fuse.js": "^3.2.0"
+  },
   "peerDependencies": {
-    "vuex-orm": "^0.15.x"
+    "@vuex-orm/core": "^0.16.x"
   },
   "devDependencies": {
     "vue-build": "^2.3.0"
@@ -19,5 +22,15 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/vuex-orm/plugin-search.git"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/vuex-orm/plugin-search/issues"
+  },
+  "keywords": [
+    "vue",
+    "vuex",
+    "vuex-plugin",
+    "vuex-orm",
+    "fuzzy search"
+  ]
 }

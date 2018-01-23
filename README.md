@@ -14,18 +14,24 @@ const data = this.$store.getters['entities/users/query']()
 ```
 
 ### API
+The search plugin method accepts two parameters
+
+- **term** : any string or an array of strings
+- **options** : see the _Fuse.js Default Options_ below
+
+**Note:** If passing an array of search terms, the results assume every element in the array must be matched.
 
 ```typescript
-search(term: any, options: Object<any>): Array<Records>
+search(term: string | Array<string>, options: Object<any>): Array<Records>
 ```
 
 ## Requirements:
 
-The search plugin requires vuex-orm package version 0.15+
+The search plugin requires **@vuex-orm/core** package version 0.16.1
 
 To upgrade the **vuex-orm package** simply run
 ```bash
-npm install vuex-orm@latest --save
+npm install @vuex-orm/core
 ```
 
 ## Installation
@@ -33,13 +39,13 @@ npm install vuex-orm@latest --save
 npm install @vuex-orm/plugin-search --save
 ```
 
-### Plugin Import Directions
+## Plugin Import Directions
 
 Import the search plugin in the Vuex Store entry file.
 
 ```javascript
 // ex: store/index.js
-import VuexORM from 'vuex-orm'
+import VuexORM from '@vuex-orm/core'
 import VuexORMSearch from '@vuex-orm/plugin-search'
 ````
 
@@ -51,7 +57,7 @@ VuexORM.use(VuexORMSearch, {
 })
 ```
 
-### Fuse.js Default Options
+## Fuse.js Default Options
 
 The plugin provides opinionated default fuse.js options for token based matching for optimum performance. These options are easily changed at two stages of the plugin lifecycle:
 
@@ -79,7 +85,9 @@ see: [Fuse.js](http://fusejs.io/) for demo
 
 ## Option Use Examples
 
-**During Plugin Install**
+Some examples on how to use the search plugin with case specific options
+
+### During Plugin Install
 
 For example, if we want to match based on case sensitive and no fuzzy search logic (perfect match)
 ```javascript
@@ -89,7 +97,7 @@ VuexORM.use(VuexORMSearch, {
 })
 ```
 
-**During Query Chain**
+### During Query Chain
 
 The global install options will now default to case sensitive and no fuzzy logic, but for example we have a run-time case we need to ignore case and implement a slightly more strict fuzzy search threshold.
 
@@ -109,3 +117,17 @@ const data = this.$store.getters['entities/users/query']()
   .get()
 ```
 
+### Finding Results Matching Multiple Terms
+
+Let's find all matches where both **pat** and **male** exist in our records, and sort by the date added.
+
+```javascript
+const terms = ['pat', 'male']
+const options = {
+  keys: ['firstName', 'gender']
+}
+const data = this.$store.getters['entities/users/query']()
+  .search(terms, options)
+  .orderBy('createdAt', 'desc')
+  .get()
+```
