@@ -66,7 +66,7 @@ The plugin provides opinionated default fuse.js options for token based matching
 
 see: [Fuse.js](http://fusejs.io/) for demo
 
-| Property | Description | Default | 
+| Property | Description | Default |
 | --- | --- | --- |
 | searchPrimaryKey | Also search the primary key | false |
 | location | Approximately where in the text is the pattern expected to be found | 0 |
@@ -131,3 +131,7 @@ const data = this.$store.getters['entities/users/query']()
   .orderBy('createdAt', 'desc')
   .get()
 ```
+
+## License
+
+The Vuex ORM Plugin Search is open-sourced software licensed under the [MIT license](LICENSE.md).
