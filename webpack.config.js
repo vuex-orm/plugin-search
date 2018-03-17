@@ -3,7 +3,7 @@ var projectRoot = process.cwd()
 // Overriding default base webpack config
 var config = {
   entry: {
-    index: './dev.js'
+    index: './index.js'
   },
   resolve: {
     // Aliases - Used for pointing to reusable parts of your app
@@ -21,7 +21,7 @@ var config = {
 if (process.env.ENVIRONMENT === 'production') {
   config.entry.index = './index.js'
   config.output = {
-    library: 'vuex-orm-plugin-search', // replace this with the name of your library
+    library: '@vuex-orm/plugin-search',
     libraryTarget: 'umd'
   }
 }

@@ -21,59 +21,71 @@ const plugin = {
   install (components, pluginOptions) {
     const installOptions = {...defaultOptions, ...pluginOptions}
 
-    components.Repo.prototype.search = function (term, singleOptions = {}) {
+    // -- breaking change check in 0.23.1
+    const { Query } = components
+    Query.on('afterWhere', function (records, entity) {
+      if (! this.searches.length) {
+        // console.log('>> no search! return records')
+        // console.log(records)
+        return records
+      }
+      // console.log('>>>>>>> SEARCH <<<<<<<<')
+      // console.log('this: ', this)
+      // console.log('entity: ', entity)
+      this.searches.forEach(({term, options}) => {
+        const fuse = new Fuse(records, options)
+        if (term && Array.isArray(term) && term.length) {
+          term.forEach(_term => {
+            records = fuse.search(_term)
+          })
+        } else {
+          records = fuse.search(term)
+        }
+      })
+      // -- clean up instance
+      this.searches = []
+      return records
+    })
+
+    // -- set global properties to use during query
+    Query.prototype.searches = []
+    Query.prototype.searchOptions = installOptions
+
+    // -- global method to get all geys and loaded relations
+    Query.prototype.allTheKeys = function () {
+      // -- normal keys
+      let fields = Object.keys(this.model.fields())
+      // -- mutations
+      fields.concat(Object.keys(this.model.mutators))
+      // -- related (1 deep)
+      this.load.forEach(({name}) => {
+        const relatedFields = Object.keys(this.getModel(name).fields())
+        fields.concat(relatedFields.map(rf => `${name}.${rf}`))
+      })
+      return fields
+    }
+
+    Query.prototype.search = function(term, singleOptions = {}) {
+
       if (term === undefined || term === '' || (Array.isArray(term) && !term.length) || term === null) {
         return this
       }
-      const fields = this.entity.fields()
-
-      // -- default search keys are all model fields
-      let searchKeys = Object.keys(fields)
-
-      // -- override default keys if plugin initializes keys
-      if (Array.isArray(pluginOptions.keys) && pluginOptions.keys.length) {
-        searchKeys = pluginOptions.keys
-      }
 
       // -- override default keys if run-time initializes keys
-      if (Array.isArray(singleOptions.keys) && singleOptions.keys.length) {
-        searchKeys = singleOptions.keys
-      }
-      const primaryKey = this.entity.primaryKey
-
-      let options = {...installOptions, ...singleOptions}
-
-      if (!options.searchPrimaryKey) {
-        let pkIndex = searchKeys.indexOf(primaryKey)
-        if (pkIndex !== -1) {
-          searchKeys.splice(pkIndex, 1)
+      const instanceOptions = {
+        ...this.searchOptions,
+        ...singleOptions,
+        ...{
+          keys: singleOptions.keys && singleOptions.keys.length ? singleOptions.keys : this.allTheKeys()
         }
       }
-      options.keys = searchKeys
-      if (options.debug) {
-        console.log('---- SEARCH OPTIONS ----')
-        console.log(options)
-        console.log('------------------------')
-      }
-      // -- perform search
-      let terms = []
-      if (Array.isArray(term) && term.length) {
-        terms = term.slice(0)
-      } else {
-        terms.push(term)
-      }
-      terms.forEach((t) => {
-        const records = this.query.records
-        const fuse = new Fuse(records, options)
-        try {
-          this.query.records = fuse.search(t)
-        } catch (e) {
-          if (options.verbose) {
-            console.log('error in search query, ignoring chain...', e)
-          }
-        }
-      })
-      // -- return instance for chaining
+      //-- add search filter
+      // console.log('>>> Add Search [Entity]: ', this.entity)
+      this.searches.push({term: term, options: instanceOptions})
+
+      // console.log('>>> ADD SEARCHES << ', this.searches)
+
+      // -- return query chain
       return this
     }
   }
