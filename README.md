@@ -27,7 +27,7 @@ search(term: string | Array<string>, options: Object<any>): Array<Records>
 
 ## Requirements:
 
-The search plugin requires **@vuex-orm/core** package version 0.16.1
+The search plugin requires **@vuex-orm/core** package version **0.23.2**
 
 To upgrade the **vuex-orm package** simply run
 ```bash
