@@ -1,9 +1,15 @@
 import Vue from 'vue'
-import dev from 'src/dev.vue'
+import Vuex from 'vuex'
+import VuexORM from '@vuex-orm/core'
+import VuexORMSearchPlugin from 'src/index'
+import User from './common/models/User'
 
-// note that these styles will not be included in your distribution builds
-// (since they're only intended to be part of the test application)
+Vue.use(Vuex)
+VuexORM.use(VuexORMSearchPlugin)
 
-new Vue({
-  render: (h) => h(dev)
-}).$mount('#app')
+const database = new VuexORM.Database()
+database.register(User, {})
+
+export const store = new Vuex.Store({
+  plugins: [VuexORM.install(database)]
+})

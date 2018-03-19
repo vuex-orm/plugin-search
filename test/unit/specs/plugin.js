@@ -1,78 +1,48 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import VuexORM from '@vuex-orm/core'
-import VuexORMSearchPlugin from 'src/index'
+import { store } from 'src/dev'
 
-const { Model } = VuexORM
+console.log('ENV:', process.env.ENVIRONMENT)
 
-describe('Search Plugin', () => {
-  class User extends Model {
-    static entity = 'users'
+describe('Setup unit tests', function () {
+  it('Can initialize Vuex store', function () {
+    expect(store)
+  })
+  it('Can add data to Users', function () {
 
-    static fields () {
-      return {
-        id: this.attr(null),
-        name: this.attr(''),
-        email: this.attr(''),
-        phone: this.attr('')
-      }
-    }
-  }
-
-  const database = new VuexORM.Database()
-
-  database.register(User, {})
-
-  Vue.use(Vuex)
-
-  it('install search plugin', async () => {
-    VuexORM.use(VuexORMSearchPlugin)
-
-    const store = new Vuex.Store({
-      plugins: [VuexORM.install(database)]
+    store.dispatch('entities/users/create', {
+      data: [
+        {
+          id: 1,
+          name: 'John Walker',
+          email: 'john@gmail.com',
+          phone: '(555) 281-4567'
+        },
+        {
+          id: 2,
+          name: 'Bobby Banana',
+          email: 'walker.banana@gmail.com',
+          phone: '(555) 555-4567'
+        }
+      ]
     })
 
-    await store.dispatch('entities/users/create', {
-      data: {
-        id: 1,
-        name: 'John Walker',
-        email: 'joe.walker81@gmail.com',
-        phone: '(555) 281-4567'
-      }
-    })
-    await store.dispatch('entities/users/create', {
-      data: {
-        id: 2,
-        name: 'Bob Walker',
-        email: 'bob.walker87@gmail.com',
-        phone: '(555) 555-4567'
-      }
-    })
+    const records = store.getters['entities/users/query']().all()
 
-    const user = store.getters['entities/users/find'](1)
+    expect(records).to.have.lengthOf(2)
 
-    expect(user.id).toBe(1)
-    expect(user.name).toBe('John Walker')
+  })
 
-    const results = store.getters['entities/users/query']()
-      .search('walker')
-      .get()
-
-    expect(results.length).toBe(2)
-
-    const nameSearch = store.getters['entities/users/query']()
-    .search('bob', {keys: ['name']})
+  it('Can create a search using plugin', function () {
+    const records = store.getters['entities/users/query']()
+    .search('walker', {keys: ['name', 'email']})
     .get()
+    expect(records).to.have.lengthOf(2)
 
-    expect(nameSearch.length).toBe(1)
-    expect(nameSearch[0].id).toBe(2)
+    console.log('**************************************')
 
-    const notFoundResults = store.getters['entities/users/query']()
-    .search('bob', {keys: ['phone']})
+    const records2 = store.getters['entities/users/query']()
+    .search('walker', {keys: ['email']})
     .get()
-
-    expect(nameSearch.length).toBe(0)
-
+    expect(records2).to.have.lengthOf(1)
   })
 
 })

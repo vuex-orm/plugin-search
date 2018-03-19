@@ -14,7 +14,7 @@ var config = {
     }
   },
   externals: {
-    'fuse.js': 'fuse.js'
+    'fuse': 'fuse.js'
   }
 }
 

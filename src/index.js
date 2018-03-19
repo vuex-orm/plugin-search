@@ -18,41 +18,14 @@ const plugin = {
   // `components` contains Vuex ORM objects such as Model, Repo, or Query.
   // The plugin author can then extend those objects to add whatever
   // features it needs.
-  install (components, pluginOptions) {
-    const installOptions = {...defaultOptions, ...pluginOptions}
+  install (components, installOptions) {
+
+    const pluginOptions = {...defaultOptions, ...installOptions}
 
     // -- breaking change check in 0.23.1
-    const { Query } = components
-    Query.on('afterWhere', function (records, entity) {
-      if (! this.searches.length) {
-        // console.log('>> no search! return records')
-        // console.log(records)
-        return records
-      }
-      // console.log('>>>>>>> SEARCH <<<<<<<<')
-      // console.log('this: ', this)
-      // console.log('entity: ', entity)
-      this.searches.forEach(({term, options}) => {
-        const fuse = new Fuse(records, options)
-        if (term && Array.isArray(term) && term.length) {
-          term.forEach(_term => {
-            records = fuse.search(_term)
-          })
-        } else {
-          records = fuse.search(term)
-        }
-      })
-      // -- clean up instance
-      this.searches = []
-      return records
-    })
+    const {Query} = components
 
-    // -- set global properties to use during query
-    Query.prototype.searches = []
-    Query.prototype.searchOptions = installOptions
-
-    // -- global method to get all geys and loaded relations
-    Query.prototype.allTheKeys = function () {
+    const searchKeys = function () {
       // -- normal keys
       let fields = Object.keys(this.model.fields())
       // -- mutations
@@ -65,30 +38,83 @@ const plugin = {
       return fields
     }
 
-    Query.prototype.search = function(term, singleOptions = {}) {
+    const searchProcess = function ({records, entity, term, options}) {
+
+      if (options.debug || process.env.ENVIRONMENT === 'testing') {
+        console.log(' ---------- PROCESS SEARCH HOOK CALLED -------------- ')
+        console.log(' > Term: ', term)
+        console.log(' > Records Count: ', records.length)
+        console.log(' > Entity: ', entity)
+        console.log(' > Keys: ', options.keys)
+      }
+
+      const fuse = new Fuse(records, options)
+
+      if (term && Array.isArray(term) && term.length) {
+        term.forEach(_term => {
+          records = fuse.search(_term).slice(0)
+        })
+      } else {
+        records = fuse.search(term).slice(0)
+      }
+
+      if (options.debug || process.env.ENVIRONMENT === 'testing') {
+        console.log(' > Results Count: ', records.length)
+        console.log(' ---------- END SEARCH -------------- ')
+      }
+
+      return records
+
+    }
+
+    const search = function (term, singleOptions = {}) {
+
+      if (pluginOptions.debug || process.env.ENVIRONMENT === 'testing' || singleOptions.debug) {
+        console.log(' ---------- + ADD NEW SEARCH CHAIN ----------- ')
+        console.log(' > TERM: ', term)
+      }
 
       if (term === undefined || term === '' || (Array.isArray(term) && !term.length) || term === null) {
+        if (pluginOptions.debug || process.env.ENVIRONMENT === 'testing' || singleOptions.debug) {
+          console.log(' > NO TERM FOUND - EXIT')
+        }
         return this
       }
 
+      //-- get default keys
+      const allKeys = searchKeys.call(this)
+
       // -- override default keys if run-time initializes keys
       const instanceOptions = {
-        ...this.searchOptions,
+        ...pluginOptions,
         ...singleOptions,
         ...{
-          keys: singleOptions.keys && singleOptions.keys.length ? singleOptions.keys : this.allTheKeys()
+          keys: singleOptions.keys && singleOptions.keys.length ? singleOptions.keys : allKeys
         }
       }
-      //-- add search filter
-      // console.log('>>> Add Search [Entity]: ', this.entity)
-      this.searches.push({term: term, options: instanceOptions})
 
-      // console.log('>>> ADD SEARCHES << ', this.searches)
+      if (pluginOptions.debug || process.env.ENVIRONMENT === 'testing' || singleOptions.debug) {
+        console.log(' > Search Keys: ', instanceOptions.keys)
+        console.log(' > Add Instance Hook ... ')
+      }
+
+      this.self().on('afterWhere', ((records, entity) => searchProcess.call(this, {records: records, entity: entity, term: term, options: instanceOptions})), true)
+
+      if (pluginOptions.debug || process.env.ENVIRONMENT === 'testing' || singleOptions.debug) {
+        console.log(' > Hook added OK')
+        console.log(this.self().hooks)
+        console.log(' > Return query chain --this--', typeof this)
+        console.log(' ---------- END ADD SEARCH ---------- ')
+      }
 
       // -- return query chain
       return this
     }
-  }
 
+    // -- prototype methods
+    Query.prototype.searchKeys = searchKeys
+    Query.prototype.search = search
+
+  }
 }
 export default plugin
