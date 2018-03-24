@@ -14,20 +14,36 @@ describe('Setup unit tests', function () {
           id: 1,
           name: 'John Walker',
           email: 'john@gmail.com',
-          phone: '(555) 281-4567'
+          phone: '(555) 281-4567',
+          roleId: 1
         },
         {
           id: 2,
           name: 'Bobby Banana',
           email: 'walker.banana@gmail.com',
-          phone: '(555) 555-4567'
+          phone: '(555) 555-4567',
+          roleId: 2
         }
       ]
     })
 
-    const records = store.getters['entities/users/query']().all()
+    store.dispatch('entities/roles/create', {
+      data: [
+        {
+          id: 1,
+          name: 'Admin'
+        },
+        {
+          id: 2,
+          name: 'Customer'
+        }
+      ]
+    })
 
-    expect(records).to.have.lengthOf(2)
+    const records = store.getters['entities/users/query']()
+      .withAll()
+      .all()
+      expect(records).to.have.lengthOf(2)
 
   })
 

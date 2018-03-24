@@ -24,19 +24,37 @@ const plugin = {
 
     // -- breaking change check in 0.23.1
     const {Query} = components
-
+    /*
     const searchKeys = function () {
       // -- normal keys
-      let fields = Object.keys(this.model.fields())
+      const modelFields = Object.keys(this.model.fields())
       // -- mutations
-      fields.concat(Object.keys(this.model.mutators))
+      const mutationFields = Object.keys(this.model.mutators)
+
       // -- related (1 deep)
-      this.load.forEach(({name}) => {
-        const relatedFields = Object.keys(this.getModel(name).fields())
-        fields.concat(relatedFields.map(rf => `${name}.${rf}`))
+      let relatedFields = []
+      this.load.forEach(relationship => {
+        const relatedModel = this.getModel(relationship.name)
+        if (relatedModel) {
+          relatedFields.concat(
+            Object.keys(relatedModel.fields())
+            .map(rf => `${relationship.name}.${rf}`)
+          )
+        }
       })
-      return fields
+      if (process.env.ENVIRONMENT === 'testing') {
+        console.log(' -- LOADED --')
+        console.log(this.load)
+        console.log(' ----- MODEL ---- ')
+        console.log(modelFields)
+        console.log(' ----- MUTATORS ---- ')
+        console.log(mutationFields)
+        console.log(' ----- RELATED ---- ')
+        console.log(relatedFields)
+      }
+      return modelFields.concat(mutationFields).concat(relatedFields)
     }
+    */
 
     const searchProcess = function ({records, entity, term, options}) {
 
@@ -82,15 +100,15 @@ const plugin = {
       }
 
       //-- get default keys
-      const allKeys = searchKeys.call(this)
+      // const allKeys = searchKeys.call(this)
 
       // -- override default keys if run-time initializes keys
-      const instanceOptions = {
+      let instanceOptions = {
         ...pluginOptions,
-        ...singleOptions,
-        ...{
-          keys: singleOptions.keys && singleOptions.keys.length ? singleOptions.keys : allKeys
-        }
+        ...singleOptions
+      }
+      if (instanceOptions.keys && !instanceOptions.keys.length) {
+        instanceOptions.keys = Object.keys(this.model.fields())
       }
 
       if (pluginOptions.debug || process.env.ENVIRONMENT === 'testing' || singleOptions.debug) {
@@ -112,7 +130,7 @@ const plugin = {
     }
 
     // -- prototype methods
-    Query.prototype.searchKeys = searchKeys
+    // Query.prototype.searchKeys = searchKeys
     Query.prototype.search = search
 
   }
