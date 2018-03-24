@@ -1,7 +1,7 @@
 {
   "name": "@vuex-orm/plugin-search",
   "description": "Fuzzy search plugin for vuex-orm",
-  "version": "0.23.3",
+  "version": "0.23.4",
   "author": "Conan Crawford <cj@cjcrawford.com>",
   "license": "MIT",
   "scripts": {
