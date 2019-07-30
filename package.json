@@ -1,31 +1,28 @@
 {
   "name": "@vuex-orm/plugin-search",
-  "description": "Fuzzy search plugin for vuex-orm",
   "version": "0.23.4",
-  "author": "Conan Crawford <cj@cjcrawford.com>",
-  "license": "MIT",
+  "description": "Vuex ORM plugin for adding fuzzy search feature through model entities.",
+  "main": "dist/vuex-orm-search.common.js",
+  "module": "dist/vuex-orm-search.esm.js",
+  "unpkg": "dist/vuex-orm-search.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "dist",
+    "lib"
+  ],
   "scripts": {
-    "dev": "vue-build dev",
-    "build": "vue-build prod",
-    "test": "NODE_ENV=test vue-build unit",
-    "test:watch": "NODE_ENV=test vue-build unit --watch"
+    "build": "yarn clean && yarn build:ts && yarn build:main ",
+    "build:ts": "tsc -p tsconfig.build.json",
+    "build:main": "node build/build.js",
+    "lint": "tslint '{src,test}/**/*.ts' -c tslint.json -p . --fix",
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "coverage": "jest --collect-coverage",
+    "clean": "rm -rf dist && rm -rf lib && rm -rf coverage && rm -rf .nyc_output && rm -rf .tmp"
   },
-  "dependencies": {
-    "fuse.js": "^3.2.0"
-  },
-  "devDependencies": {
-    "@vuex-orm/core": "^0.23.3",
-    "vue": "^2.5.16",
-    "vue-build": "^3.0.0-beta.2",
-    "vuex": "^3.0.1"
-  },
-  "main": "dist/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/vuex-orm/plugin-search.git"
-  },
-  "bugs": {
-    "url": "https://github.com/vuex-orm/plugin-search/issues"
   },
   "keywords": [
     "vue",
@@ -33,5 +30,51 @@
     "vuex-plugin",
     "vuex-orm",
     "fuzzy search"
-  ]
+  ],
+  "author": "Conan Crawford <cj@cjcrawford.com>",
+  "contributors": [
+    "Kia Ishii <kia.king.08@gmail.com>"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vuex-orm/plugin-search/issues"
+  },
+  "dependencies": {
+    "@vuex-orm/core": "^0.32.1",
+    "fuse.js": "^3.4.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.16",
+    "codecov": "^3.5.0",
+    "jest": "^24.8.0",
+    "rollup": "^1.17.0",
+    "rollup-plugin-commonjs": "^10.0.1",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "ts-jest": "^24.0.2",
+    "tslint": "^5.18.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.5.3",
+    "uglify-js": "^3.6.0",
+    "vue": "^2.6.10",
+    "vuex": "^3.1.1"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "ts",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^test/(.*)$": "<rootDir>/test/$1"
+    },
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!**/node_modules/**"
+    ]
+  }
 }
