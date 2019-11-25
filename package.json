@@ -1,6 +1,6 @@
 {
   "name": "@vuex-orm/plugin-search",
-  "version": "0.24.0",
+  "version": "0.24.1",
   "description": "Vuex ORM plugin for adding fuzzy search feature through model entities.",
   "main": "dist/vuex-orm-search.common.js",
   "module": "dist/vuex-orm-search.esm.js",
