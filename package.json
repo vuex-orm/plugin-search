@@ -40,23 +40,23 @@
     "url": "https://github.com/vuex-orm/plugin-search/issues"
   },
   "dependencies": {
-    "@vuex-orm/core": "^0.32.1",
-    "fuse.js": "^3.4.5"
+    "@vuex-orm/core": "^0.34.0",
+    "fuse.js": "^3.4.6"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.16",
+    "@types/jest": "^24.0.23",
     "codecov": "^3.5.0",
-    "jest": "^24.8.0",
-    "rollup": "^1.17.0",
-    "rollup-plugin-commonjs": "^10.0.1",
+    "jest": "^24.9.0",
+    "rollup": "^1.27.5",
+    "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "ts-jest": "^24.0.2",
-    "tslint": "^5.18.0",
-    "tslint-config-standard": "^8.0.1",
-    "typescript": "^3.5.3",
-    "uglify-js": "^3.6.0",
+    "ts-jest": "^24.2.0",
+    "tslint": "^5.20.1",
+    "tslint-config-standard": "^9.0.0",
+    "typescript": "^3.7.2",
+    "uglify-js": "^3.6.9",
     "vue": "^2.6.10",
-    "vuex": "^3.1.1"
+    "vuex": "^3.1.2"
   },
   "jest": {
     "moduleFileExtensions": [
