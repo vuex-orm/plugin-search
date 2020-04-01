@@ -16,11 +16,11 @@ declare module '@vuex-orm/core' {
     /**
      * Add search configurations.
      */
-    search (terms: string | string[], options?: Options): this
+    search(terms: string | string[], options?: Options): this
 
     /**
      * Filter the given record with fuzzy search by Fuse.js.
      */
-    filterSearch (records: Collection): Collection
+    filterSearch(records: Collection): Collection
   }
 }

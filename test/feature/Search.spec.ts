@@ -5,7 +5,7 @@ describe('Feature – Search', () => {
   class User extends Model {
     static entity = 'users'
 
-    static fields (): Fields {
+    static fields(): Fields {
       return {
         id: this.attr(null),
         name: this.string(''),
@@ -28,7 +28,10 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search('John').orderBy('id').get()
+    const result = User.query()
+      .search('John')
+      .orderBy('id')
+      .get()
 
     expect(result.length).toBe(1)
     expect(result[0].id).toBe(1)
@@ -45,7 +48,10 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search(['rin', 'obby']).orderBy('id').get()
+    const result = User.query()
+      .search(['rin', 'obby'])
+      .orderBy('id')
+      .get()
 
     expect(result.length).toBe(2)
     expect(result[0].id).toBe(2)
@@ -63,7 +69,9 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().orderBy('id').get()
+    const result = User.query()
+      .orderBy('id')
+      .get()
 
     expect(result.length).toBe(3)
   })
@@ -79,7 +87,10 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search(['rin', 'mail']).orderBy('id').get()
+    const result = User.query()
+      .search(['rin', 'mail'])
+      .orderBy('id')
+      .get()
 
     expect(result.length).toBe(1)
   })
@@ -95,7 +106,10 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search(['rin', 'mail'], { keys: ['name'] }).orderBy('id').get()
+    const result = User.query()
+      .search(['rin', 'mail'], { keys: ['name'] })
+      .orderBy('id')
+      .get()
 
     expect(result.length).toBe(1)
   })

@@ -19,7 +19,7 @@ export default class VuexORMSearch {
   /**
    * Create a new Vuex ORM Search instance.
    */
-  constructor (components: Components, options: Options) {
+  constructor(components: Components, options: Options) {
     this.query = components.Query
     this.options = { ...DefaultOptions, ...options }
   }
@@ -27,7 +27,7 @@ export default class VuexORMSearch {
   /**
    * Plug in features.
    */
-  plugin (): void {
+  plugin(): void {
     this.mixQuery()
 
     this.registerQueryHook()
@@ -36,7 +36,7 @@ export default class VuexORMSearch {
   /**
    * Apply query mixin.
    */
-  mixQuery (): void {
+  mixQuery(): void {
     QueryMixin(this.query, this.options)
   }
 
@@ -44,8 +44,11 @@ export default class VuexORMSearch {
    * Register global `afterWhere` hook to execute search filtering during the
    * select process.
    */
-  registerQueryHook (): void {
-    this.query.on('afterWhere', function (this: Query, collection: Collection): Collection {
+  registerQueryHook(): void {
+    this.query.on('afterWhere', function(
+      this: Query,
+      collection: Collection
+    ): Collection {
       return this.filterSearch(collection)
     })
   }

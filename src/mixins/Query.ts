@@ -3,7 +3,7 @@ import { Query as BaseQuery } from '@vuex-orm/core'
 import Options from '../contracts/Options'
 import Collection from '../contracts/Collection'
 
-export default function Query (query: typeof BaseQuery, options: Options): void {
+export default function Query(query: typeof BaseQuery, options: Options): void {
   /**
    * The search terms.
    */
@@ -17,7 +17,10 @@ export default function Query (query: typeof BaseQuery, options: Options): void 
   /**
    * Add search configurations.
    */
-  query.prototype.search = function (terms: string | string[], options: Options = {}): BaseQuery {
+  query.prototype.search = function(
+    terms: string | string[],
+    options: Options = {}
+  ): BaseQuery {
     // If `terms` is single string, convert it to an array so we can use it
     // consistently afterward.
     this.searchTerms = Array.isArray(terms) ? terms : [terms]
@@ -38,7 +41,7 @@ export default function Query (query: typeof BaseQuery, options: Options): void 
   /**
    * Filter the given record with fuzzy search by Fuse.js.
    */
-  query.prototype.filterSearch = function (collection: Collection): Collection {
+  query.prototype.filterSearch = function(collection: Collection): Collection {
     if (this.searchTerms === null) {
       return collection
     }
