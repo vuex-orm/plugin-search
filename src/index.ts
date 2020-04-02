@@ -5,7 +5,7 @@ import Options from './contracts/Options'
 import VuexORMSearch from './VuexORMSearch'
 
 export default {
-  install (components: Components, installOptions: Options): void {
-    (new VuexORMSearch(components, installOptions)).plugin()
+  install(components: Components, installOptions: Options): void {
+    new VuexORMSearch(components, installOptions).plugin()
   }
 }
