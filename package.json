@@ -68,25 +68,5 @@
     "typescript": "^3.8.3",
     "vue": "^2.6.11",
     "vuex": "^3.1.3"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "ts",
-      "json"
-    ],
-    "moduleNameMapper": {
-      "^@/(.*)$": "<rootDir>/src/$1",
-      "^test/(.*)$": "<rootDir>/test/$1"
-    },
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "collectCoverageFrom": [
-      "src/**/*.ts",
-      "!src/index.cjs.ts",
-      "!**/node_modules/**"
-    ]
   }
 }
