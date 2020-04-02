@@ -1,25 +1,25 @@
 <p align="center">
-  <img width="192" src="https://github.com/vuex-orm/plugin-search/raw/master/logo-vuex-orm.png" alt="Vuex ORM">
+  <img width="192" src="https://github.com/vuex-orm/vuex-orm/raw/master/logo-vuex-orm.png" alt="Vuex ORM">
 </p>
 
-<h1 align="center">Vuex Orm Plugin: Search</h1>
+<h1 align="center">Vuex ORM Plugin: Search</h1>
 
 <p align="center">
+  <a href="https://www.npmjs.com/package/@vuex-orm/plugin-search">
+    <img src="https://img.shields.io/npm/v/@vuex-orm/plugin-search?color=blue" alt="npm">
+  </a>
   <a href="https://travis-ci.org/vuex-orm/plugin-search">
     <img src="https://travis-ci.org/vuex-orm/plugin-search.svg?branch=master" alt="Travis CI">
   </a>
   <a href="https://codecov.io/gh/vuex-orm/plugin-search">
     <img src="https://codecov.io/gh/vuex-orm/plugin-search/branch/master/graph/badge.svg" alt="codecov">
   </a>
-  <a href="https://standardjs.com">
-    <img src="https://img.shields.io/badge/code_style-standard-brightgreen.svg" alt="JavaScript Style Guide">
-  </a>
   <a href="https://github.com/vuex-orm/plugin-search/blob/master/LICENSE.md">
     <img src="https://img.shields.io/npm/l/@vuex-orm/plugin-search.svg" alt="License">
   </a>
 </p>
 
-Vuex ORM Search plugin adds a **search()** method to the vuex-orm query methods to easily filter matched records using fuzzy search logic from the [Fuse.js](http://fusejs.io/) library.
+Vuex ORM Search plugin adds a `search()` query chain modifier to easily filter matched records using fuzzy search logic from the [Fuse.js](http://fusejs.io/) library.
 
 A simple example to search for '_john_' within your query:
 
@@ -27,21 +27,66 @@ A simple example to search for '_john_' within your query:
 const users = User.query().search('john').get()
 ```
 
+<h2 align="center">Sponsors</h2>
+
+<p align="center">Vuex ORM is sponsored by awesome folks. Big love to all of them from whole Vuex ORM community :two_hearts:</p>
+
+<h4 align="center">Super Love Sponsors</h4>
+
+<p align="center">
+  <a href="https://github.com/petertoth">
+    <img src="https://avatars2.githubusercontent.com/u/3661783?s=460&v=4" alt="Peter Tóth" width="88">
+  </a>
+  <a href="https://github.com/phaust">
+    <img src="https://avatars1.githubusercontent.com/u/2367770?s=460&v=4" alt="Mario Kolli" width="88">
+  </a>
+  <a href="https://github.com/cannikan">
+    <img src="https://avatars2.githubusercontent.com/u/21893904?s=460&v=4" alt="Cannikan" width="88">
+  </a>
+  <a href="https://github.com/somazx">
+    <img src="https://avatars0.githubusercontent.com/u/7306?s=460&v=4" alt="Andy Koch" width="88">
+  </a>
+  <a href="https://github.com/dylancopeland">
+    <img src="https://avatars1.githubusercontent.com/u/99355?s=460&v=4" alt="Dylan Copeland" width="88">
+  </a>
+</p>
+
+<h4 align="center">Big Love Sponsors</h4>
+
+<p align="center">
+  <a href="https://github.com/geraldbiggs">
+    <img src="https://avatars1.githubusercontent.com/u/3213608?s=460&v=4" alt="geraldbiggs" width="64">
+  </a>
+  <a href="https://github.com/cuebit">
+    <img src="https://avatars0.githubusercontent.com/u/1493221?s=460&v=4" alt="Cue" width="64">
+  </a>
+</p>
+
+<h4 align="center">A Love Sponsors</h4>
+
+<p align="center">
+  <a href="https://github.com/georgechaduneli">
+    <img src="https://avatars1.githubusercontent.com/u/9340753?s=460&v=4" alt="George Chaduneli" width="48">
+  </a>
+  <a href="https://github.com/bpuig">
+    <img src="https://avatars3.githubusercontent.com/u/22938625?s=460&v=4" alt="bpuig" width="48">
+  </a>
+  <a href="https://github.com/robokozo">
+    <img src="https://avatars2.githubusercontent.com/u/1719221?s=400&u=b5739798ee9a3d713f5ca3bd3d6a086c13d229a3&v=4" alt="John" width="48">
+  </a>
+</p>
+
 ## Installation
 
-Install `@vuex-orm/plugin-search` alongside with Vuex ORM Core.
+Install `@vuex-orm/plugin-search` alongside Vuex ORM.
 
 ```bash
-# Via NPM.
 npm install @vuex-orm/core @vuex-orm/plugin-search --save
-
-# Via Yarn.
+# OR
 yarn add @vuex-orm/core @vuex-orm/plugin-search
 ```
 
-## Setup
-
-Import the search plugin in the Vuex Store entry file.
+Then install the plugin using Vuex ORM `use()` method.
 
 ```js
 import VuexORM from '@vuex-orm/core'
@@ -57,11 +102,11 @@ VuexORM.use(VuexORMSearch, {
 The search plugin method accepts two parameters.
 
 ```ts
-search(terms: string | string[], options: object): this
+search(terms: string | string[], options: Object): Query
 ```
 
-- **terms** – any string or an array of strings.
-- **options** – see the "Configurations" section below.
+- `terms` – any string or an array of strings.
+- `options` – see the [Configurations](#configurations) section below.
 
 > **NOTE:** If passing an array of search terms, the results assume some element in the array to be matched.
 
@@ -110,7 +155,7 @@ VuexORM.use(VuexORMSearch, {
 
 The global install options will now default to case sensitive and no fuzzy logic, but for example we have a run-time case we need to ignore case and implement a slightly more strict fuzzy search threshold.
 
-Let's also specify the need to only search the **firstName** and **lastName** fields.
+Let's also specify the need to only search the `firstName` and `lastName` fields.
 
 ```js
 const users = User.query().search('john', {
@@ -122,7 +167,7 @@ const users = User.query().search('john', {
 
 ### Finding Results Matching Multiple Terms
 
-Let's find all matches where both **pat** and **male** exist in our records, and sort by the date added.
+Let's find all matches where both `pat` and `male` exist in our records, and sort by the date added.
 
 ```javascript
 const data = User.query().search(['pat', 'male'], {
@@ -130,42 +175,68 @@ const data = User.query().search(['pat', 'male'], {
 }).get()
 ```
 
+## Questions & Discussions
+
+Join us on our [Slack Channel](https://join.slack.com/t/vuex-orm/shared_invite/enQtNDQ0NjE3NTgyOTY2LTc1YTI2N2FjMGRlNGNmMzBkMGZlMmYxOTgzYzkzZDM2OTQ3OGExZDRkN2FmMGQ1MGJlOWM1NjU0MmRiN2VhYzQ) for any questions and discussions.
+
+Although there is the Slack Channel, do not hesitate to open an [issue](https://github.com/vuex-orm/plugin-search/issues) for any question you might have. We're always more than happy to hear any feedback, and we don't care what kind of form they are.
+
+## Plugins
+
+Vuex ORM can be extended via plugins to add additional features. Here is a list of available plugins.
+
+- [Vuex ORM Axios](https://github.com/vuex-orm/plugin-axios) – The plugin to sync the store against a RESTful API.
+- [Vuex ORM GraphQL](https://github.com/vuex-orm/plugin-graphql) – The plugin to sync the store against a [GraphQL](https://graphql.org) API.
+- [Vuex ORM Change Flags](https://github.com/vuex-orm/plugin-change-flags) - Vuex ORM plugin for adding IsDirty / IsNew flags to model entities.
+- [Vuex ORM Soft Delete](https://github.com/vuex-orm/plugin-soft-delete) – Vuex ORM plugin for adding soft delete feature to model entities.
+
 ## Contribution
 
-We are excited that you are interested in contributing to Vuex ORM Search! Anything from raising an issue, submitting an idea of a new feature, or making a pull request is welcome!
+We are excited that you are interested in contributing to Vuex ORM Plugin: Search! Anything from raising an issue, submitting an idea of a new feature, or making a pull request is welcome! Before submitting your contribution though, please make sure to take a moment and read through the following guidelines.
 
-### Development
+### Pull Request Guidelines
+
+When submitting a new pull request, please make sure to follow these guidelines:
+
+- **For feature requests:** Checkout a topic branch from `dev` branch, and merge back against `dev` branch.
+- **For bug fixes:** Checkout a topic branch from `master` branch, and merge back against `master` branch.
+
+These rules also apply to the documentation. If you're submitting documentation about a new feature that isn't released yet, you must checkout the `dev` branch, but for non-functional updates, such as fixing a typo, you may checkout and commit to the `master` branch.
+
+### Scripts
+
+There are several scripts to help with development.
 
 ```bash
-$ yarn build
+yarn build
 ```
 
 Compile files and generate bundles in `dist` directory.
 
 ```bash
-$ yarn lint
+yarn lint
 ```
 
-Lint files using a rule of Standard JS.
+Lint files using [Prettier](https://prettier.io/).
 
 ```bash
-$ yarn test
+yarn test
 ```
 
 Run the test using [Jest](https://jestjs.io/).
 
 ```bash
-$ yarn test:watch
+yarn test:watch
 ```
 
 Run the test in watch mode.
 
 ```bash
-$ yarn coverage
+yarn coverage
 ```
 
 Generate test coverage in `coverage` directory.
 
 ## License
 
-The Vuex ORM Plugin Search is open-sourced software licensed under the [MIT license](LICENSE.md).
+Vuex ORM Plugin: Search is open-sourced software licensed under the [MIT license](./LICENSE).
