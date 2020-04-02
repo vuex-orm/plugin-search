@@ -1,3 +1,9 @@
+/.nyc_output
+/.tmp
 /coverage
+/dist
 /lib
 /node_modules
+.idea/*
+.vscode/*
+yarn-error.log
