@@ -37,6 +37,25 @@ describe('Feature – Search', () => {
     expect(result[0].id).toBe(1)
   })
 
+  test('it will do nothing if `search` term is empty', async () => {
+    createStore([User])
+
+    await User.insert({
+      data: [
+        { id: 1, name: 'John Walker', email: 'john@example.com' },
+        { id: 2, name: 'Bobby Banana', email: 'walker.banana@example.com' },
+        { id: 3, name: 'Ringo Looper', email: 'ringo.looper@example.com' }
+      ]
+    })
+
+    const result = User.query()
+      .search('')
+      .orderBy('id')
+      .get()
+
+    expect(result.length).toBe(3)
+  })
+
   test('it can fuzzy search records by many terms', async () => {
     createStore([User])
 
