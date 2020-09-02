@@ -35,19 +35,19 @@ const users = User.query().search('john').get()
 
 <p align="center">
   <a href="https://github.com/petertoth">
-    <img src="https://avatars2.githubusercontent.com/u/3661783?s=460&v=4" alt="Peter Tóth" width="88">
+    <img src="https://avatars2.githubusercontent.com/u/3661783?s=400&u=0d66c9a6709bd59b2889ff92174a80770711d759&v=4" alt="Peter Tóth" width="88">
   </a>
   <a href="https://github.com/phaust">
-    <img src="https://avatars1.githubusercontent.com/u/2367770?s=460&v=4" alt="Mario Kolli" width="88">
+    <img src="https://avatars3.githubusercontent.com/u/2367770?s=400&u=28cd2dd0867cd7d74476ca65979f6552b0d42d3a&v=4" alt="Mario Kolli" width="88">
   </a>
   <a href="https://github.com/cannikan">
-    <img src="https://avatars2.githubusercontent.com/u/21893904?s=460&v=4" alt="Cannikan" width="88">
+    <img src="https://avatars3.githubusercontent.com/u/21893904?s=400&u=49d1351ecabd0ce22b27c795ae84329d0df5b5a1&v=4" alt="Cannikan" width="88">
   </a>
   <a href="https://github.com/somazx">
-    <img src="https://avatars0.githubusercontent.com/u/7306?s=460&v=4" alt="Andy Koch" width="88">
+    <img src="https://avatars1.githubusercontent.com/u/7306?s=400&u=f84e099436b410997457f2550778d6ef6f2ab01b&v=4" alt="Andy Koch" width="88">
   </a>
   <a href="https://github.com/dylancopeland">
-    <img src="https://avatars1.githubusercontent.com/u/99355?s=460&v=4" alt="Dylan Copeland" width="88">
+    <img src="https://avatars3.githubusercontent.com/u/99355?s=400&u=bf1bab6e58913dd78091011d685657e00764a0a5&v=4" alt="Dylan Copeland" width="88">
   </a>
 </p>
 
@@ -55,16 +55,19 @@ const users = User.query().search('john').get()
 
 <p align="center">
   <a href="https://github.com/geraldbiggs">
-    <img src="https://avatars1.githubusercontent.com/u/3213608?s=460&v=4" alt="geraldbiggs" width="64">
+    <img src="https://avatars1.githubusercontent.com/u/3213608?s=400&v=4" alt="geraldbiggs" width="64">
   </a>
   <a href="https://github.com/cuebit">
-    <img src="https://avatars0.githubusercontent.com/u/1493221?s=460&v=4" alt="Cue" width="64">
+    <img src="https://avatars1.githubusercontent.com/u/1493221?s=400&u=5b717087f490c7c833114b416bc68482d77ea732&v=4" alt="Cue" width="64">
   </a>
   <a href="https://github.com/kazupon">
-    <img src="https://avatars0.githubusercontent.com/u/72989?s=400&v=4" alt="Kazuya Kawaguchi" width="64">
+    <img src="https://avatars0.githubusercontent.com/u/72989?s=400&u=d333c3048e3d6f8ed2a476a3564dba1fa5288b86&v=4" alt="Kazuya Kawaguchi" width="64">
   </a>
   <a href="https://github.com/jShaf">
-    <img src="https://avatars3.githubusercontent.com/u/30289?s=400&v=4" alt="jShaf" width="64">
+    <img src="https://avatars3.githubusercontent.com/u/30289?s=400&u=0460c0bd3a14fdd0a2858c38e4ef9b9bca6feba0&v=4" alt="jShaf" width="64">
+  </a>
+  <a href="https://github.com/ibrainventures">
+    <img src="https://avatars3.githubusercontent.com/u/8803626?s=400&u=503790fc336254a8ac7987108996cc6c0b176229&v=4" alt="ibrainventures" width="64">
   </a>
 </p>
 
@@ -72,16 +75,19 @@ const users = User.query().search('john').get()
 
 <p align="center">
   <a href="https://github.com/georgechaduneli">
-    <img src="https://avatars1.githubusercontent.com/u/9340753?s=460&v=4" alt="George Chaduneli" width="48">
+    <img src="https://avatars2.githubusercontent.com/u/9340753?s=400&u=408833700943f9415bbab3d8b425ada9a6ceecf9&v=4" alt="George Chaduneli" width="48">
   </a>
   <a href="https://github.com/bpuig">
-    <img src="https://avatars3.githubusercontent.com/u/22938625?s=460&v=4" alt="bpuig" width="48">
+    <img src="https://avatars3.githubusercontent.com/u/22938625?s=400&u=8247495852163c78c0c1f88216deaa38648e7d78&v=4" alt="bpuig" width="48">
   </a>
   <a href="https://github.com/robokozo">
-    <img src="https://avatars2.githubusercontent.com/u/1719221?s=400&v=4" alt="John" width="48">
+    <img src="https://avatars2.githubusercontent.com/u/1719221?s=400&u=b5739798ee9a3d713f5ca3bd3d6a086c13d229a3&v=4" alt="John" width="48">
   </a>
   <a href="https://github.com/mean-cj">
-    <img src="https://avatars3.githubusercontent.com/u/1191385?s=400&v=4" alt="mean-cj" width="48">
+    <img src="https://avatars3.githubusercontent.com/u/1191385?s=400&u=d32b39fe065ee369e94bec47e5c3bde776262d3d&v=4" alt="mean-cj" width="48">
+  </a>
+  <a href="https://github.com/WoodyDark">
+    <img src="https://avatars3.githubusercontent.com/u/40813266?s=400&u=76a849aa78dfcaeb5abe8252d3d598c169cd1a82&v=4" alt="Jeffrey Soong" width="48">
   </a>
 </p>
 
