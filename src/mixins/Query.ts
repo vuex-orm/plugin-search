@@ -42,7 +42,10 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
    * Filter the given record with fuzzy search by Fuse.js.
    */
   query.prototype.filterSearch = function(collection: Collection): Collection {
-    if (this.searchTerms === null) {
+    if (
+      this.searchTerms === null ||
+      this.searchTerms.filter(Boolean).length === 0
+    ) {
       return collection
     }
 
