@@ -17,7 +17,7 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
   /**
    * Add search configurations.
    */
-  query.prototype.search = function(
+  query.prototype.search = function (
     terms: string | string[],
     options: Options = {}
   ): BaseQuery {
@@ -41,7 +41,7 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
   /**
    * Filter the given record with fuzzy search by Fuse.js.
    */
-  query.prototype.filterSearch = function(collection: Collection): Collection {
+  query.prototype.filterSearch = function (collection: Collection): Collection {
     if (
       this.searchTerms === null ||
       this.searchTerms.filter(Boolean).length === 0

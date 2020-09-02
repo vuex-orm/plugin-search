@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import * as Vuex from 'vuex'
+import Vuex, { Store } from 'vuex'
 import VuexORM, { Database, Model } from '@vuex-orm/core'
 import Options from '@/contracts/Options'
 import VuexORMSearch from '@/index'
@@ -7,7 +7,7 @@ import VuexORMSearch from '@/index'
 export function createStore(
   models: typeof Model[],
   options?: Options
-): Vuex.Store<any> {
+): Store<any> {
   Vue.use(Vuex)
 
   VuexORM.use(VuexORMSearch, options)

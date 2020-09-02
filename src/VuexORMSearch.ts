@@ -45,7 +45,7 @@ export default class VuexORMSearch {
    * select process.
    */
   registerQueryHook(): void {
-    this.query.on('afterWhere', function(
+    this.query.on('afterWhere', function (
       this: Query,
       collection: Collection
     ): Collection {
