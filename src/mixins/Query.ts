@@ -52,7 +52,7 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
     const fuse = new Fuse(collection, this.searchOptions)
 
     return this.searchTerms.reduce<Collection>((carry, term) => {
-      carry.push(...fuse.search(term))
+      carry.push(...fuse.search(term).map((result) => result.item))
 
       return carry
     }, [])
