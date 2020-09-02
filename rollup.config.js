@@ -6,8 +6,8 @@ import ts from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
 
 const configs = [
-  { input: 'src/index.ts', file: 'dist/vuex-orm-search.esm.js', format: 'es', browser: true, env: 'development' },
-  { input: 'src/index.ts', file: 'dist/vuex-orm-search.esm.prod.js', format: 'es', browser: true, env: 'production' },
+  { input: 'src/index.ts', file: 'dist/vuex-orm-search.esm-browser.js', format: 'es', browser: true, env: 'development' },
+  { input: 'src/index.ts', file: 'dist/vuex-orm-search.esm-browser.prod.js', format: 'es', browser: true, env: 'production' },
   { input: 'src/index.ts', file: 'dist/vuex-orm-search.esm-bundler.js', format: 'es', env: 'development' },
   { input: 'src/index.cjs.ts', file: 'dist/vuex-orm-search.global.js', format: 'iife', env: 'development' },
   { input: 'src/index.cjs.ts', file: 'dist/vuex-orm-search.global.prod.js', format: 'iife', minify: true, env: 'production' },
@@ -46,7 +46,7 @@ function createEntry(config) {
       : config.env !== 'production'
   }))
 
-  c.plugins.push(resolve())
+  c.plugins.push(resolve({ browser: true }))
   c.plugins.push(commonjs())
 
   c.plugins.push(ts({
