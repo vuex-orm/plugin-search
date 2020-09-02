@@ -2,8 +2,8 @@
 /.tmp
 /coverage
 /dist
-/lib
 /node_modules
+/temp
 .idea/*
 .vscode/*
 yarn-error.log
