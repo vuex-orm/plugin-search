@@ -1,12 +1,17 @@
-import Options from '../contracts/Options'
-import Collection from '../contracts/Collection'
+import { Options } from '../contracts/Options'
+import { Collection } from '../contracts/Collection'
+import {
+  SearchResults,
+  SearchExpression,
+  SearchPattern
+} from '../contracts/Query'
 
 declare module '@vuex-orm/core' {
-  interface Query {
+  interface Query<T> {
     /**
      * The search terms.
      */
-    searchTerms: string[] | null
+    searchTerms: SearchExpression | null
 
     /**
      * The search options.
@@ -14,13 +19,18 @@ declare module '@vuex-orm/core' {
     searchOptions: Options
 
     /**
+     * The raw search results.
+     */
+    searchResults: SearchResults<T>
+
+    /**
      * Add search configurations.
      */
-    search(terms: string | string[], options?: Options): this
+    search(terms: SearchPattern, options?: Options): this
 
     /**
      * Filter the given record with fuzzy search by Fuse.js.
      */
-    filterSearch(records: Collection): Collection
+    filterSearch(records: Collection): Collection<T>
   }
 }

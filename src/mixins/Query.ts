@@ -1,7 +1,6 @@
 import Fuse from 'fuse.js'
 import { Query as BaseQuery } from '@vuex-orm/core'
-import Options from '../contracts/Options'
-import Collection from '../contracts/Collection'
+import { Options } from '../contracts/Options'
 
 export default function Query(query: typeof BaseQuery, options: Options): void {
   /**
@@ -15,24 +14,25 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
   query.prototype.searchOptions = options
 
   /**
+   * The raw search results.
+   */
+  query.prototype.searchResults = []
+
+  /**
    * Add search configurations.
    */
-  query.prototype.search = function (
-    terms: string | string[],
-    options: Options = {}
-  ): BaseQuery {
-    // If `terms` is single string, convert it to an array so we can use it
-    // consistently afterward.
-    this.searchTerms = Array.isArray(terms) ? terms : [terms]
+  query.prototype.search = function (pattern, options = {}) {
+    // For backward-compat, transform Array<string> to string type.
+    this.searchTerms = Array.isArray(pattern)
+      ? pattern.filter(Boolean).join(' ')
+      : pattern || null
 
-    // If a user didn't provide `keys` option, set all model fields as default.
-    if ((this.searchOptions.keys as string[]).length === 0) {
-      this.searchOptions.keys = Object.keys(
-        this.model.cachedFields[this.model.entity]
-      )
+    // If a user didn't provide a `keys` option, set it to all model fields by default.
+    if (!this.searchOptions.keys || this.searchOptions.keys.length === 0) {
+      this.searchOptions.keys = Object.keys(this.model.getFields())
     }
 
-    // Finally, merge default options with users options.
+    // Merge default options with query options.
     this.searchOptions = { ...this.searchOptions, ...options }
 
     return this
@@ -41,20 +41,15 @@ export default function Query(query: typeof BaseQuery, options: Options): void {
   /**
    * Filter the given record with fuzzy search by Fuse.js.
    */
-  query.prototype.filterSearch = function (collection: Collection): Collection {
-    if (
-      this.searchTerms === null ||
-      this.searchTerms.filter(Boolean).length === 0
-    ) {
+  query.prototype.filterSearch = function (collection) {
+    if (this.searchTerms === null || this.searchTerms === '') {
       return collection
     }
 
     const fuse = new Fuse(collection, this.searchOptions)
 
-    return this.searchTerms.reduce<Collection>((carry, term) => {
-      carry.push(...fuse.search(term).map((result) => result.item))
+    this.searchResults = fuse.search(this.searchTerms)
 
-      return carry
-    }, [])
+    return this.searchResults.map((result) => result.item)
   }
 }

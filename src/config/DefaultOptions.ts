@@ -1,16 +1,35 @@
-import Options from '../contracts/Options'
+import * as Options from '../contracts/Options'
 
-export const DefaultOptions: Options = {
-  distance: 100,
-  location: 0,
-  maxPatternLength: 32,
-  minMatchCharLength: 1,
-  searchPrimaryKey: false,
-  shouldSort: false,
-  threshold: 0.3,
-  tokenize: false,
-  keys: [],
-  verbose: false
+export const matchOptions: Options.MatchOptions = {
+  includeMatches: false,
+  findAllMatches: false,
+  minMatchCharLength: 1
 }
 
-export default DefaultOptions
+export const basicOptions: Options.BasicOptions = {
+  isCaseSensitive: false,
+  includeScore: false,
+  keys: [],
+  shouldSort: false
+}
+
+export const fuzzyOptions: Options.FuzzyOptions = {
+  location: 0,
+  threshold: 0.5,
+  distance: 100
+}
+
+export const advancedOptions: Options.AdvancedOptions = {
+  useExtendedSearch: false,
+  ignoreLocation: false,
+  ignoreFieldNorm: false
+}
+
+export const defaultOptions: Options.Options = {
+  ...matchOptions,
+  ...basicOptions,
+  ...fuzzyOptions,
+  ...advancedOptions
+}
+
+export default defaultOptions
