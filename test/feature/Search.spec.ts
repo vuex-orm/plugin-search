@@ -34,7 +34,7 @@ describe('Feature – Search', () => {
     expect(result[0].id).toBe(1)
   })
 
-  it('can fuzzy search records by many terms', async () => {
+  it('can fuzzy search records by many terms (compat)', async () => {
     createStore([User])
 
     await User.insert({
@@ -63,7 +63,7 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search('').orderBy('id').get()
+    const result = User.query().search('').get()
 
     expect(result.length).toBe(3)
   })
@@ -95,7 +95,7 @@ describe('Feature – Search', () => {
       ]
     })
 
-    const result = User.query().search(['rin', 'mail']).orderBy('id').get()
+    const result = User.query().search('rin mail').get()
 
     expect(result.length).toBe(1)
   })
@@ -112,10 +112,35 @@ describe('Feature – Search', () => {
     })
 
     const result = User.query()
-      .search(['rin', 'mail'], { keys: ['name'] })
-      .orderBy('id')
+      .search('rin mail', { keys: ['name'] })
       .get()
 
     expect(result.length).toBe(1)
+  })
+
+  it('exposes raw search results on a query instance', async () => {
+    createStore([User])
+
+    await User.insert({
+      data: [
+        { id: 1, name: 'John Walker', email: 'john@example.com' },
+        { id: 2, name: 'Bobby Banana', email: 'mail.mail@example.com' },
+        { id: 3, name: 'Ringo Looper', email: 'ringo.looper@example.com' }
+      ]
+    })
+
+    const query = User.query().search('walker', {
+      includeScore: true,
+      includeMatches: true
+    })
+    const result = query.get()
+
+    expect(result).toHaveLength(1)
+    expect(Object.keys(query.searchResults[0]).sort()).toEqual([
+      'item',
+      'matches',
+      'refIndex',
+      'score'
+    ])
   })
 })

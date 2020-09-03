@@ -1,7 +1,7 @@
 import { Query } from '@vuex-orm/core'
-import Components from './contracts/Components'
-import Options from './contracts/Options'
-import Collection from './contracts/Collection'
+import { Components } from './contracts/Components'
+import { Options } from './contracts/Options'
+import { Collection } from './contracts/Collection'
 import DefaultOptions from './config/DefaultOptions'
 import QueryMixin from './mixins/Query'
 
@@ -25,7 +25,7 @@ export default class VuexORMSearch {
   }
 
   /**
-   * Plug in features.
+   * Plugin features.
    */
   plugin(): void {
     this.mixQuery()

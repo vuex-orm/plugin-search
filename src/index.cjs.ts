@@ -1,7 +1,7 @@
 import './types/vuex-orm'
 
-import Components from './contracts/Components'
-import Options from './contracts/Options'
+import { Components } from './contracts/Components'
+import { Options } from './contracts/Options'
 import VuexORMSearch from './VuexORMSearch'
 
 export default {

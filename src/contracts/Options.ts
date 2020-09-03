@@ -1,14 +1,31 @@
-export interface Options {
-  distance?: number
-  location?: number
-  maxPatternLength?: number
-  minMatchCharLength?: number
-  searchPrimaryKey?: boolean
+import Fuse from 'fuse.js'
+
+export interface BasicOptions {
+  isCaseSensitive?: boolean
+  includeScore?: boolean
+  keys?: Fuse.FuseOptionKey[]
   shouldSort?: boolean
-  threshold?: number
-  tokenize?: boolean
-  keys?: string[]
-  verbose?: boolean
 }
 
-export default Options
+export interface MatchOptions {
+  includeMatches?: boolean
+  findAllMatches?: boolean
+  minMatchCharLength?: number
+}
+
+export interface FuzzyOptions {
+  location?: number
+  threshold?: number
+  distance?: number
+}
+
+export interface AdvancedOptions {
+  useExtendedSearch?: boolean
+  ignoreLocation?: boolean
+  ignoreFieldNorm?: boolean
+}
+
+export type Options = BasicOptions &
+  MatchOptions &
+  FuzzyOptions &
+  AdvancedOptions
